@@ -1,0 +1,55 @@
+{
+  "require": {
+    "symfony/symfony": "^3.0",
+    "sensio/framework-extra-bundle": "^3.0",
+    "friendsofsymfony/rest-bundle": "^1.7",
+    "doctrine/orm": "2.5.*",
+    "doctrine/doctrine-bundle": "~1.6",
+    "jms/serializer-bundle": "1.1.*",
+    "sensio/generator-bundle": "^3.0",
+    "sensio/distribution-bundle": "5.0.*",
+    "incenteev/composer-parameter-handler": "^2.0",
+    "friendsofsymfony/oauth-server-bundle": "1.5.*",
+    "guzzlehttp/guzzle": "6.1.*",
+    "symfony/psr-http-message-bridge": "^0.2.0",
+    "zendframework/zend-diactoros": "^1.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.1",
+    "mockery/mockery": "^0.9.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "CloudPOS\\Component\\": "src/CloudPOS/Component/",
+      "CloudPOS\\Bundle\\": "src/CloudPOS/Bundle/"
+    },
+    "classmap": [
+      "app/AppKernel.php"
+    ]
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+    ],
+    "post-update-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+    ]
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-bin-dir": "bin",
+    "symfony-web-dir": "web",
+    "symfony-var-dir": "var",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
+    }
+  }
+}

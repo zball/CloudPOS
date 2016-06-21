@@ -1,0 +1,15 @@
+services:
+    cloud_pos_store.item_resolver:
+        class: CloudPOS\Bundle\StoreBundle\Resolver\ItemResolver
+        arguments: [ "@cloud_pos_core.validator", "@cloud_pos_store.product_repository" ]
+    cloud_pos_store.product_manager:
+        class: CloudPOS\Bundle\StoreBundle\Manager\ProductManager
+        arguments: [ "@doctrine.orm.entity_manager", "@cloud_pos_core.validator" ]
+    cloud_pos_store.cart_manager:
+            class: CloudPOS\Bundle\StoreBundle\Manager\CartManager
+            arguments: [ "@doctrine.orm.entity_manager", "@cloud_pos_core.validator" ]
+    cloud_pos_store.product_repository:
+            class: Doctrine\ORM\EntityRepository
+            factory: ["@doctrine", getRepository]
+            arguments:
+                - CloudPOS\Bundle\StoreBundle\Entity\Product

@@ -1,0 +1,3 @@
+services:
+    cloud_pos_api.rest.handler:
+        class: CloudPOS\Bundle\ApiBundle\Security\OAuthHandler

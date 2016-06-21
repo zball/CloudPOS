@@ -1,0 +1,19 @@
+services:
+    cloud_pos_core.validator:
+        class: CloudPOS\Component\Validator\Validator
+        arguments:
+            - "@validator"
+    cloud_pos_core.cors_subscriber:
+        class: CloudPOS\Bundle\CoreBundle\EventListener\CorsListener
+        tags:
+            - {name: kernel.event_subscriber}
+    cloud_pos_core.exception_listener:
+        class: CloudPOS\Bundle\CoreBundle\EventListener\ExceptionListener
+        tags:
+            - {name: kernel.event_listener, event: kernel.exception, method: onKernelException}
+    cloud_pos_core.json_transformer:
+        class: CloudPOS\Bundle\CoreBundle\EventListener\ResponseListener
+        arguments:
+          - "@serializer"
+        tags:
+            - {name: kernel.event_listener, event: kernel.view, method: onKernelView}

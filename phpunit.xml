@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true"
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Bundle Test Suite">
+            <directory>./src/CloudPOS/Bundle/*/Tests/</directory>
+        </testsuite>
+        <testsuite name="Component Test Suite">
+            <directory>./src/CloudPOS/Component/*/Tests/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="SYMFONY_ENV" value="test"/>
+        <server name="KERNEL_DIR" value="app" />
+    </php>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/CloudPOS/Bundle/*/</directory>
+            <directory suffix=".php">./src/CloudPOS/Component/*/</directory>
+        </whitelist>
+        <blacklist>
+            <directory>./src/CloudPOS/Bundle/*/Resources/</directory>
+            <directory>./src/CloudPOS/Bundle/*/Tests/</directory>
+        </blacklist>
+    </filter>
+</phpunit>

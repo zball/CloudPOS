@@ -1,0 +1,32 @@
+framework:
+    secret: SECRET
+    profiler: { only_exceptions: false }
+    validation: { enable_annotations: true }
+    test: ~
+    templating:
+        engines: ['php']
+
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+    orm:
+        auto_mapping: true
+fos_rest:
+    routing_loader:
+        default_format: json
+    param_fetcher_listener: true
+
+fos_oauth_server:
+    db_driver: orm
+    client_class:        CloudPOS\Bundle\ApiBundle\Entity\Client
+    access_token_class:  CloudPOS\Bundle\ApiBundle\Entity\AccessToken
+    refresh_token_class: CloudPOS\Bundle\ApiBundle\Entity\RefreshToken
+    auth_code_class:     CloudPOS\Bundle\ApiBundle\Entity\AuthCode
+    service:
+        user_provider: cloud_pos_user.user_provider
+        options:
+            supported_scopes: user

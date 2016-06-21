@@ -1,0 +1,57 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: sha512
+        CloudPOS\Bundle\UserBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+          ROLE_ADMIN:       ROLE_USER
+          ROLE_API:         ROLE_USER
+          ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        user_provider:
+            id: cloud_pos_user.user_provider
+        in_memory:
+            memory:
+                users:
+                    restapi:  { password: secretpw, roles: [ 'ROLE_API' ] }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        oauth_token:
+            pattern:    ^/api/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            # Add your favorite authentication process here
+            form_login:
+                provider: user_provider
+                check_path: /oauth/v2/auth_login_check
+                login_path: /oauth/v2/auth_login
+                failure_handler: cloud_pos_api.rest.handler
+                success_handler: cloud_pos_api.rest.handler
+                username_parameter: login
+                password_parameter: password
+        auth:
+            pattern:    ^/api/users/login
+            anonymous:  true
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  true # can be omitted as its default value
+
+        main:
+            pattern: ^/
+            anonymous: ~
+            stateless:  true
+#            http_basic:
+#                realm: "Demo REST API (username: restapi, password: secretpw)"
+    access_control:
+        #- { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+        - { path: ^/oauth/v2/auth_login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/users/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

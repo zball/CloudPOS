@@ -1,0 +1,18 @@
+stages:
+  - test
+  - deploy
+
+job_2:
+  stage: test
+  script:
+    - composer install --no-interaction
+    - phpunit
+
+job_3:
+  stage: deploy
+  script:
+    - cd /home/matthew/www/cloudpos
+    - git reset .
+    - git pull origin master
+    - composer install --no-dev --no-interaction
+    - php bin/console doctrine:schema:update --force

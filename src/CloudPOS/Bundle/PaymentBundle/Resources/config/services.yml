@@ -1,0 +1,13 @@
+services:
+    cloud_pos_payment.guzzle:
+        class: GuzzleHttp\Client
+    cloud_pos_payment.rest.adapter:
+        class: CloudPOS\Bundle\PaymentBundle\Rest\Adapter
+        arguments: [ GuzzleHttp\Client\Client ]
+
+    cloud_pos_payment.rest_gateway.paypal:
+        class: CloudPOS\Bundle\PaymentBundle\Rest\Gateway\Paypal
+        arguments: [ "@cloud_pos_payment.guzzle" ]
+    cloud_pos_payment.payment_controller:
+        class: CloudPOS\Bundle\PaymentBundle\Controller\PaymentController
+        arguments: ["@cloud_pos_payment.rest_gateway.paypal"]

@@ -1,0 +1,30 @@
+services:
+    cloud_pos_user.user.service:
+        class: CloudPOS\Bundle\UserBundle\Service\UserService
+        arguments:
+            - "@cloud_pos_user.password_encoder"
+            - "@cloud_pos_core.validator"
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+    cloud_pos_user.password_encoder:
+        class: Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder
+        factory_service: "@security.encoder_factory.generic"
+        factory_method: getEncoder
+        arguments:
+            - 10
+    cloud_pos_user.doctrine.user_manager:
+        class: CloudPOS\Bundle\UserBundle\Doctrine\UserManager
+        arguments: [ "@cloud_pos_user.password_encoder", "@cloud_pos_core.validator", "@doctrine.orm.entity_manager" ]
+    cloud_pos_user.user_manager:
+        class: Doctrine\ORM\EntityManager
+        factory_service: doctrine
+        factory_method: getManagerForClass
+        arguments: [CloudPOS\Bundle\UserBundle\Entity\User]
+    cloud_pos_user.user_repository:
+        class: CloudPOS\Bundle\UserBundle\Doctrine\UserRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - CloudPOS\Bundle\UserBundle\Entity\User
+    cloud_pos_user.user_provider:
+        class: CloudPOS\Bundle\UserBundle\Service\UserProvider
+        arguments: ["@cloud_pos_user.user_repository"]

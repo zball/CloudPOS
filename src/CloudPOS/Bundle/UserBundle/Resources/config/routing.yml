@@ -1,0 +1,3 @@
+#cloudposuser_routes:
+#    resource: '@CloudPOSUserBundle/Controller/'
+#    type:     annotation # required to enable the Annotation reader for this resource

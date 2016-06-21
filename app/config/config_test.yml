@@ -1,0 +1,11 @@
+imports:
+  - { resource: config.yml }
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        dbname:   test_db
+        user:     test
+        path:     %kernel.root_dir%/../var/cache/sqlite.db.cache
+        memory:   true
+        charset:  utf8
